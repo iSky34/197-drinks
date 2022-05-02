@@ -46,7 +46,7 @@ import os
 #!pip install -U torchvision
 
 # Commented out IPython magic to ensure Python compatibility.
-!pip install albumentations==0.4.6
+#pip install albumentations==0.4.6
 import torch
 import torchvision
 from torchvision import datasets, models
