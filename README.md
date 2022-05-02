@@ -1,10 +1,19 @@
 # 197-drinks
 
 I. Paper
+model: fasterrcnn_mobilenet_v3_large_fpn
+https://github.com/jwyang/faster-rcnn.pytorch
 
-II. Install requirements
+II. Install and use requirements
 
 pip3 install -r requirements.txt
+
+preferrably ran on colab
+
+!git clone https://github.com/iSky34/197-drinks
+!pip install -r /content/197-drinks/requirements.txt
+!python3 /content/197-drinks/train.py
+!python3 /content/197-drinks/test.py
 
 III. Sample Results
 ![image](https://user-images.githubusercontent.com/103951064/166331356-ba67bd12-8899-4a91-880a-b095a7b25b6e.png)
@@ -61,3 +70,7 @@ V. Pre Trained Model evaluation
  Average Recall     (AR) @[ IoU=0.50:0.95 | area=medium | maxDets=100 ] = 0.797
  Average Recall     (AR) @[ IoU=0.50:0.95 | area= large | maxDets=100 ] = 0.846
  
+VIII.
+Colab examples:
+train:https://colab.research.google.com/drive/1SZ2fjgPzWbTXGTWVCtTYEDzjVX6-9z5l?usp=sharing
+test: https://colab.research.google.com/drive/1BITQPgHg9wnCb4t3KTtCbO19H4xWcDi4?usp=sharing
