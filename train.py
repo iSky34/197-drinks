@@ -77,7 +77,7 @@ from torchvision.utils import draw_bounding_boxes
 # print(torch.__version__)
 # print(torchvision.__version__)
 
-!pip install pycocotools
+#!pip install pycocotools
 from pycocotools.coco import COCO
 
 from albumentations.pytorch import ToTensorV2
