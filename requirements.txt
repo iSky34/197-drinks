@@ -1,8 +1,7 @@
-pytorch-lightning --upgrade
-torchmetrics --upgrade
-pytorch-lightning --upgrade
-torchmetrics --upgrade
+pytorch-lightning
+torchmetrics
+
 argparse
--U torchvision
+torchvision
 albumentations==0.4.6
 pycocotools
