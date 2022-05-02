@@ -10,14 +10,14 @@ Original file is located at
 
 
 #!pip install git+https://github.com/gautamchitnis/cocoapi.git@cocodataset-master#subdirectory=PythonAPI
-!pip install pytorch-lightning --upgrade
-!pip install torchmetrics --upgrade
-!pip install pytorch-lightning --upgrade
-!pip install torchmetrics --upgrade
-#!pip install wandb
-#!pip install wandb --updgrade
-!pip install argparse
-!pip install -U torchvision
+# !pip install pytorch-lightning --upgrade
+# !pip install torchmetrics --upgrade
+# !pip install pytorch-lightning --upgrade
+# !pip install torchmetrics --upgrade
+# #!pip install wandb
+# #!pip install wandb --updgrade
+# !pip install argparse
+# !pip install -U torchvision
 
 #!pip install custom
 
@@ -43,7 +43,7 @@ import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import os
 
-!pip install -U torchvision
+#!pip install -U torchvision
 
 # Commented out IPython magic to ensure Python compatibility.
 !pip install albumentations==0.4.6
