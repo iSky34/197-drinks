@@ -154,7 +154,7 @@ class DrinksDetection(datasets.VisionDataset):
     def __len__(self):
         return len(self.ids)
 
-dataset_path = "197/drinkscoco"
+dataset_path = "/content/197/drinkscoco"
 
 #!pip install Coco
 coco = COCO(os.path.join(dataset_path, "train", "_annotations.coco.json"))
