@@ -9,15 +9,7 @@ Original file is located at
 
 
 
-# !pip install git+https://github.com/gautamchitnis/cocoapi.git@cocodataset-master#subdirectory=PythonAPI
-# !pip install pytorch-lightning --upgrade
-# !pip install torchmetrics --upgrade
-# !pip install pytorch-lightning --upgrade
-# !pip install torchmetrics --upgrade
-#!pip install wandb
-#!pip install wandb --updgrade
-# !pip install argparse
-# !pip install -U torchvision
+
 
 '''
 from google.colab import drive
