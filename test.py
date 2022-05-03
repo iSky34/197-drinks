@@ -200,5 +200,5 @@ data_loader_test = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuff
 
 
 
-model2=torch.load('/content/drive/MyDrive/197/drinkscoco/drinksmodel.pth')
+model2=torch.load('drinksmodel.pth')
 evaluate(model2, data_loader_test,device=device)
