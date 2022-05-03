@@ -292,8 +292,5 @@ torch.cuda.empty_cache()
 
 
 
-torch.save(model,'/content/drive/MyDrive/197/drinkscoco/drinksmodel.pth')
-#torch.save(model.state_dict(),'/content/drive/MyDrive/197/drinkscoco/drinksmodel2.pth')
+torch.save(model,'drinksmodel.pth')
 
-#model2=torch.load('/content/drive/MyDrive/197/drinkscoco/drinksmodel.imt')
-#evaluate(model2, data_loader_test,device=device)
