@@ -33,7 +33,7 @@ open('weights.zip','wb').write(a.content)
 
 
 
-with zipfile.ZipFile('/197-20220502T103206Z-001.zip','r') as a:
+with zipfile.ZipFile('197-20220502T103206Z-001.zip','r') as a:
     a.extractall()
 with zipfile.ZipFile('weights.zip','r') as a:
     a.extractall()
