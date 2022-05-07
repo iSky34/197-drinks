@@ -36,15 +36,18 @@ import os
 import requests
 import zipfile
 
-url='https://github.com/iSky34/197-drinks/releases/download/Dataset/197-20220502T103206Z-001.zip'
-a=requests.get(url)
-open('197-20220502T103206Z-001.zip','wb').write(a.content)
+if not os.path.exists("197/drinkscoco/train/_annotations.coco.json"):
+    print(f'downloading dataset')
+    url='https://github.com/iSky34/197-drinks/releases/download/Dataset/197-20220502T103206Z-001.zip'
+    a=requests.get(url)
+    open('197-20220502T103206Z-001.zip','wb').write(a.content)
+    with zipfile.ZipFile('197-20220502T103206Z-001.zip','r') as a:
+        a.extractall()
 
-#with zipfile.ZipFile('/content/197-20220502T103206Z-001.zip','r') as a:
-#    a.extractall()
-    
-with zipfile.ZipFile('197-20220502T103206Z-001.zip','r') as a:
-    a.extractall()
+
+
+
+
 
     
 import numpy as np # linear algebra
