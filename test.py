@@ -24,7 +24,7 @@ from torchvision.utils import draw_bounding_boxes
 
 #!pip install pycocotools
 from pycocotools.coco import COCO
-
+from engine import evaluate
 from albumentations.pytorch import ToTensorV2
 
 if not os.path.exists("197/drinkscoco/train/_annotations.coco.json"):
@@ -115,71 +115,45 @@ class DrinksDetection(datasets.VisionDataset):
     def __len__(self):
         return len(self.ids)
 
-dataset_path = "197/drinkscoco"
-
-#!pip install Coco
-coco = COCO(os.path.join(dataset_path, "train", "_annotations.coco.json"))
-categories = coco.cats
-n_classes = len(categories.keys())
-categories
-
-train_dataset = DrinksDetection(root=dataset_path, transforms=get_transforms(True))
-
-# # Lets view a sample
-# sample = train_dataset[2]
-# img_int = torch.tensor(sample[0] * 255, dtype=torch.uint8)
-# plt.imshow(draw_bounding_boxes(
-#     img_int, sample[1]['boxes'], [classes[i] for i in sample[1]['labels']], width=4
-# ).permute(1, 2, 0))
-
-# len(train_dataset)
-
-model = models.detection.fasterrcnn_mobilenet_v3_large_fpn(pretrained=True)
-in_features = model.roi_heads.box_predictor.cls_score.in_features # we need to change the head
-model.roi_heads.box_predictor = models.detection.faster_rcnn.FastRCNNPredictor(in_features, n_classes)
-
 def collate_fn(batch):
     return tuple(zip(*batch))
 
-train_loader = DataLoader(train_dataset, batch_size=4, shuffle=True, num_workers=4, collate_fn=collate_fn)
 
-# images,targets = next(iter(train_loader))
-# images = list(image for image in images)
-# targets = [{k:v for k, v in t.items()} for t in targets]
-# output = model(images, targets) # just make sure this runs without error
+if __name__ == '__main__':
 
-device = torch.device("cuda") # use GPU to train
+    dataset_path = "197/drinkscoco"
 
-model = model.to(device)
+    coco = COCO(os.path.join(dataset_path, "train", "_annotations.coco.json"))
+    categories = coco.cats
+    n_classes = len(categories.keys())
+    categories
 
-params = [p for p in model.parameters() if p.requires_grad]
-optimizer = torch.optim.SGD(params, lr=0.01, momentum=0.9, nesterov=True, weight_decay=1e-4)
-# lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[16, 22], gamma=0.1) # lr scheduler
+    train_dataset = DrinksDetection(root=dataset_path, transforms=get_transforms(True))
 
-from engine import evaluate
+    model = models.detection.fasterrcnn_mobilenet_v3_large_fpn(pretrained=True)
+    in_features = model.roi_heads.box_predictor.cls_score.in_features # we need to change the head
+    model.roi_heads.box_predictor = models.detection.faster_rcnn.FastRCNNPredictor(in_features, n_classes)
 
-# def collate_fn(batch):
-#     data_list, label_list = [], []
-#     for _data, _label in batch:
-#         data_list.append(_data)
-#         label_list.append(_label)
- #   return torch.Tensor(data_list), torch.LongTensor(label_list)
-def collate_fn(batch):
-    return tuple(zip(*batch))
-test_dataset = DrinksDetection(root=dataset_path, split="test", transforms=get_transforms(False))
+    train_loader = DataLoader(train_dataset, batch_size=4, shuffle=True, num_workers=4, collate_fn=collate_fn)
 
+    device = torch.device("cuda") # use GPU to train
 
-data_loader_test = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=4,
-        collate_fn=collate_fn)
+    model = model.to(device)
+
+    params = [p for p in model.parameters() if p.requires_grad]
+    optimizer = torch.optim.SGD(params, lr=0.01, momentum=0.9, nesterov=True, weight_decay=1e-4)
+    # lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[16, 22], gamma=0.1) # lr scheduler
+
+    test_dataset = DrinksDetection(root=dataset_path, split="test", transforms=get_transforms(False))
 
 
+    data_loader_test = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=4,
+            collate_fn=collate_fn)
 
-#model2=torch.load("dd.pth")
+    model = models.detection.fasterrcnn_mobilenet_v3_large_fpn(pretrained=True)
+    in_features = model.roi_heads.box_predictor.cls_score.in_features
+    model.roi_heads.box_predictor = models.detection.faster_rcnn.FastRCNNPredictor(in_features, n_classes)
+    model.load_state_dict(torch.load("dd.pth"))
+    model.to(device)
 
-model = models.detection.fasterrcnn_mobilenet_v3_large_fpn(pretrained=True)
-in_features = model.roi_heads.box_predictor.cls_score.in_features
-model.roi_heads.box_predictor = models.detection.faster_rcnn.FastRCNNPredictor(in_features, n_classes)
-model.load_state_dict(torch.load("dd.pth"))
-model.to(device)
-
-evaluate(model, data_loader_test,device=device)
+    evaluate(model, data_loader_test,device=device)
