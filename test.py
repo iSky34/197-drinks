@@ -26,6 +26,13 @@ url='https://github.com/iSky34/197-drinks/releases/download/Dataset/197-20220502
 a=requests.get(url)
 open('197-20220502T103206Z-001.zip','wb').write(a.content)
 
+
+url='https://github.com/iSky34/197-drinks/releases/download/weights/weights.zip'
+a=requests.get(url)
+open('weights.zip','wb').write(a.content)
+
+
+
 with zipfile.ZipFile('/content/197-20220502T103206Z-001.zip','r') as a:
     a.extractall()
 
@@ -141,7 +148,7 @@ class DrinksDetection(datasets.VisionDataset):
     def __len__(self):
         return len(self.ids)
 
-dataset_path = "/content/197/drinkscoco"
+dataset_path = "/197/drinkscoco"
 
 #!pip install Coco
 coco = COCO(os.path.join(dataset_path, "train", "_annotations.coco.json"))
@@ -200,5 +207,5 @@ data_loader_test = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuff
 
 
 
-model2=torch.load('drinksmodel.pth')
+model2=torch.load("dd.pth")
 evaluate(model2, data_loader_test,device=device)
