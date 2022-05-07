@@ -10,6 +10,7 @@ II. Install and use requirements
 pip3 install -r requirements.txt
 
 preferrably ran on colab
+
 !cd content
 
 !git clone https://github.com/iSky34/197-drinks
