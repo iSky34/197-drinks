@@ -33,7 +33,9 @@ open('weights.zip','wb').write(a.content)
 
 
 
-with zipfile.ZipFile('/content/197-20220502T103206Z-001.zip','r') as a:
+with zipfile.ZipFile('/197-20220502T103206Z-001.zip','r') as a:
+    a.extractall()
+with zipfile.ZipFile('weights.zip','r') as a:
     a.extractall()
 
 import numpy as np # linear algebra
@@ -148,7 +150,7 @@ class DrinksDetection(datasets.VisionDataset):
     def __len__(self):
         return len(self.ids)
 
-dataset_path = "/197/drinkscoco"
+dataset_path = "197/drinkscoco"
 
 #!pip install Coco
 coco = COCO(os.path.join(dataset_path, "train", "_annotations.coco.json"))
