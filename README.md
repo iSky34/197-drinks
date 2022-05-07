@@ -1,4 +1,5 @@
 # 197-drinks
+Name:Eisler Spencer T. Go
 
 I. Paper
 model: fasterrcnn_mobilenet_v3_large_fpn
