@@ -35,7 +35,7 @@ if not os.path.exists("197/drinkscoco/train/_annotations.coco.json"):
     with zipfile.ZipFile('197-20220502T103206Z-001.zip','r') as a:
         a.extractall()
 
-if not os.path.exists("197/drinkscoco/train/_annotations.coco.json"):
+if not os.path.exists("weights.zip"):
     print(f'downloading weights')
     url='https://github.com/iSky34/197-drinks/releases/download/weights/weights.zip'
     a=requests.get(url)
