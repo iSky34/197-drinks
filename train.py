@@ -31,6 +31,7 @@ sys.path.insert(0, '/content/drive/MyDrive/197')
 sys.path.insert(0, '/content/drive/MyDrive/197/python/python2')
 '''
 import os
+import sys
 
 
 import requests
@@ -58,20 +59,13 @@ import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 # Commented out IPython magic to ensure Python compatibility.
 #pip install albumentations==0.4.6
 import torch
-import torchvision
 from torchvision import datasets, models
-from torchvision.transforms import functional as FT
-from torchvision import transforms as T
-from torch import nn, optim
-from torch.nn import functional as F
 from torch.utils.data import DataLoader, sampler, random_split, Dataset
 import copy
 import math
 from PIL import Image
 import cv2
 import albumentations as A  # our data augmentation library
-
-import matplotlib.pyplot as plt
 # %matplotlib inline
 
 
@@ -79,8 +73,6 @@ import matplotlib.pyplot as plt
 import warnings
 warnings.filterwarnings("ignore")
 from collections import defaultdict, deque
-import datetime
-import time
 from tqdm import tqdm # progress bar
 from torchvision.utils import draw_bounding_boxes
 
@@ -91,6 +83,7 @@ from torchvision.utils import draw_bounding_boxes
 from pycocotools.coco import COCO
 
 from albumentations.pytorch import ToTensorV2
+from engine import evaluate
 
 def get_transforms(train=False):
     if train:
@@ -164,53 +157,9 @@ class DrinksDetection(datasets.VisionDataset):
     def __len__(self):
         return len(self.ids)
 
-dataset_path = "197/drinkscoco"
-
-#!pip install Coco
-coco = COCO(os.path.join(dataset_path, "train", "_annotations.coco.json"))
-categories = coco.cats
-n_classes = len(categories.keys())
-categories
-
-classes = [i[1]['name'] for i in categories.items()]
-# classes
-
-train_dataset = DrinksDetection(root=dataset_path, transforms=get_transforms(True))
-
-# # Lets view a sample
-# sample = train_dataset[2]
-# img_int = torch.tensor(sample[0] * 255, dtype=torch.uint8)
-# plt.imshow(draw_bounding_boxes(
-#     img_int, sample[1]['boxes'], [classes[i] for i in sample[1]['labels']], width=4
-# ).permute(1, 2, 0))
-
-# len(train_dataset)
-
-model = models.detection.fasterrcnn_mobilenet_v3_large_fpn(pretrained=True)
-in_features = model.roi_heads.box_predictor.cls_score.in_features # we need to change the head
-model.roi_heads.box_predictor = models.detection.faster_rcnn.FastRCNNPredictor(in_features, n_classes)
-
 def collate_fn(batch):
     return tuple(zip(*batch))
 
-train_loader = DataLoader(train_dataset, batch_size=4, shuffle=True, num_workers=4, collate_fn=collate_fn)
-
-# images,targets = next(iter(train_loader))
-# images = list(image for image in images)
-# targets = [{k:v for k, v in t.items()} for t in targets]
-# output = model(images, targets) # just make sure this runs without error
-
-device = torch.device("cuda") # use GPU to train
-
-model = model.to(device)
-
-params = [p for p in model.parameters() if p.requires_grad]
-optimizer = torch.optim.SGD(params, lr=0.01, momentum=0.9, nesterov=True, weight_decay=1e-4)
-# lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[16, 22], gamma=0.1) # lr scheduler
-
-#!git clone https://github.com/pytorch/vision 
-#!git clone https://github.com/cocodataset/cocoapi
-#from engine import evaluate as COCOeval
 
 def train_one_epoch(model, optimizer, loader, device, epoch):
     model.to(device)
@@ -259,48 +208,68 @@ def train_one_epoch(model, optimizer, loader, device, epoch):
         all_losses_dict['loss_objectness'].mean()
     ))
 
-from engine import evaluate
 
-# def collate_fn(batch):
-#     data_list, label_list = [], []
-#     for _data, _label in batch:
-#         data_list.append(_data)
-#         label_list.append(_label)
- #   return torch.Tensor(data_list), torch.LongTensor(label_list)
-def collate_fn(batch):
-    return tuple(zip(*batch))
-test_dataset = DrinksDetection(root=dataset_path, split="test", transforms=get_transforms(False))
+if __name__ == "__main__":
 
+    dataset_path = "197/drinkscoco"
 
-data_loader_test = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=4,
-        collate_fn=collate_fn)
-num_epochs=10
-# evaluate(model, data_loader_test,device=device)
-#cocoGt=coco
-#cocoDt=cocoGt.loadRes('detections.json')
-#evaluate(model, data_loader_test,device=device)
-for epoch in range(num_epochs):
-    train_one_epoch(model, optimizer, train_loader, device, epoch)
-evaluate(model, data_loader_test,device=device)
-#    cocoEval = COCOeval(cocoGt,cocoDt,annType)
-#    cocoEval.params.imgIds  = imgIds
-#    cocoEval.evaluate()
-#    cocoEval.accumulate()
-#    cocoEval.summarize()
-#     lr_scheduler.step()
+    #!pip install Coco
+    coco = COCO(os.path.join(dataset_path, "train", "_annotations.coco.json"))
+    categories = coco.cats
+    n_classes = len(categories.keys())
+    categories
 
-# we will watch first epoich to ensure no errrors
-# while it is training, lets write code to see the models predictions. lets try again
-model.eval()
-torch.cuda.empty_cache()
+    classes = [i[1]['name'] for i in categories.items()]
+    # classes
+
+    train_dataset = DrinksDetection(root=dataset_path, transforms=get_transforms(True))
+
+    # # Lets view a sample
+    # sample = train_dataset[2]
+    # img_int = torch.tensor(sample[0] * 255, dtype=torch.uint8)
+    # plt.imshow(draw_bounding_boxes(
+    #     img_int, sample[1]['boxes'], [classes[i] for i in sample[1]['labels']], width=4
+    # ).permute(1, 2, 0))
+
+    # len(train_dataset)
+
+    model = models.detection.fasterrcnn_mobilenet_v3_large_fpn(pretrained=True)
+    in_features = model.roi_heads.box_predictor.cls_score.in_features # we need to change the head
+    model.roi_heads.box_predictor = models.detection.faster_rcnn.FastRCNNPredictor(in_features, n_classes)
 
 
+    train_loader = DataLoader(train_dataset, batch_size=4, shuffle=True, num_workers=4, collate_fn=collate_fn)
+
+    # images,targets = next(iter(train_loader))
+    # images = list(image for image in images)
+    # targets = [{k:v for k, v in t.items()} for t in targets]
+    # output = model(images, targets) # just make sure this runs without error
+
+    device = torch.device("cuda") # use GPU to train
+
+    model = model.to(device)
+
+    params = [p for p in model.parameters() if p.requires_grad]
+    optimizer = torch.optim.SGD(params, lr=0.01, momentum=0.9, nesterov=True, weight_decay=1e-4)
+    # lr_scheduler = torch.optim.lr_scheduler.MultiStepLR(optimizer, milestones=[16, 22], gamma=0.1) # lr scheduler
+
+    #!git clone https://github.com/pytorch/vision 
+    #!git clone https://github.com/cocodataset/cocoapi
+    #from engine import evaluate as COCOeval
+
+    test_dataset = DrinksDetection(root=dataset_path, split="test", transforms=get_transforms(False))
 
 
+    data_loader_test = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuffle=False, num_workers=4,
+            collate_fn=collate_fn)
+    num_epochs=2
 
+    for epoch in range(num_epochs):
+        train_one_epoch(model, optimizer, train_loader, device, epoch)
+    evaluate(model, data_loader_test,device=device)
 
+    model.eval()
+    torch.cuda.empty_cache()
 
-
-
-torch.save(model,'drinksmodel.pth')
+    torch.save(model,'drinksmodel.pth')
 
