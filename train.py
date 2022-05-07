@@ -30,18 +30,25 @@ sys.path.insert(0, '/content/drive/MyDrive/197/python/python')
 sys.path.insert(0, '/content/drive/MyDrive/197')
 sys.path.insert(0, '/content/drive/MyDrive/197/python/python2')
 '''
+import os
+
+
 import requests
 import zipfile
+
 url='https://github.com/iSky34/197-drinks/releases/download/Dataset/197-20220502T103206Z-001.zip'
 a=requests.get(url)
 open('197-20220502T103206Z-001.zip','wb').write(a.content)
 
-with zipfile.ZipFile('/content/197-20220502T103206Z-001.zip','r') as a:
+#with zipfile.ZipFile('/content/197-20220502T103206Z-001.zip','r') as a:
+#    a.extractall()
+    
+with zipfile.ZipFile('/197-20220502T103206Z-001.zip','r') as a:
     a.extractall()
 
+    
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
-import os
 
 #!pip install -U torchvision
 
