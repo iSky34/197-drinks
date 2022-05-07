@@ -43,7 +43,7 @@ open('197-20220502T103206Z-001.zip','wb').write(a.content)
 #with zipfile.ZipFile('/content/197-20220502T103206Z-001.zip','r') as a:
 #    a.extractall()
     
-with zipfile.ZipFile('/197-20220502T103206Z-001.zip','r') as a:
+with zipfile.ZipFile('197-20220502T103206Z-001.zip','r') as a:
     a.extractall()
 
     
@@ -92,13 +92,17 @@ from albumentations.pytorch import ToTensorV2
 def get_transforms(train=False):
     if train:
         transform = A.Compose([
-           
-        torchvision.transforms.ToTensor()
+            A.Resize(600, 600), # our input size can be 600px
+            A.HorizontalFlip(p=0.3),
+            A.VerticalFlip(p=0.3),
+            A.RandomBrightnessContrast(p=0.1),
+            #A.ColorJitter(p=0.1),
+            ToTensorV2()
         ], bbox_params=A.BboxParams(format='coco'))
     else:
         transform = A.Compose([
-            
-        torchvision.transforms.ToTensor()
+            A.Resize(600, 600), # our input size can be 600px
+            ToTensorV2()
         ], bbox_params=A.BboxParams(format='coco'))
     return transform
 
@@ -157,7 +161,7 @@ class DrinksDetection(datasets.VisionDataset):
     def __len__(self):
         return len(self.ids)
 
-dataset_path = "/197/drinkscoco"
+dataset_path = "197/drinkscoco"
 
 #!pip install Coco
 coco = COCO(os.path.join(dataset_path, "train", "_annotations.coco.json"))
@@ -219,7 +223,7 @@ def train_one_epoch(model, optimizer, loader, device, epoch):
     all_losses = []
     all_losses_dict = []
     
-    for images, targets in tqdm(loader):
+    for images, targets in enumerate(tqdm(loader)):
         images = list(image.to(device) for image in images)
         targets = [{k: torch.tensor(v).to(device) for k, v in t.items()} for t in targets]
         
