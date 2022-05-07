@@ -209,5 +209,6 @@ data_loader_test = torch.utils.data.DataLoader(test_dataset, batch_size=1, shuff
 
 
 
-model2=torch.load("dd.pth")
-evaluate(model2, data_loader_test,device=device)
+model.load_state_dict(torch.load("dd.pth"))
+
+evaluate(model, data_loader_test,device=device)
