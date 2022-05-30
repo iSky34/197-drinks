@@ -620,7 +620,7 @@ if __name__ == "__main__":
 
 
     model = LitTransformer(num_classes=37, lr=args.lr, epochs=10, 
-                           depth=24, embed_dim=64, head=args.num_heads,
+                           depth=36, embed_dim=64, head=args.num_heads,
                            patch_dim=patch_dim, seqlen=seqlen,)
     model_checkpoint = ModelCheckpoint(
         dirpath=os.path.join("checkpoints"),
@@ -631,7 +631,7 @@ if __name__ == "__main__":
         mode='max',
     )
     trainer = Trainer(accelerator=args.accelerator, devices=args.devices,
-                      max_epochs=20, precision=16 if args.accelerator == 'gpu' else 32,callbacks=model_checkpoint,)
+                      max_epochs=30, precision=16 if args.accelerator == 'gpu' else 32,callbacks=model_checkpoint,)
     trainer.fit(model, datamodule=datamodule)
 
 import einops
