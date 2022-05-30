@@ -4,7 +4,7 @@ Use transformers for keyword spotting
 
 Name:Eisler Spencer T. Go
 
-I. Paper
+# I. Paper
 
 model: transformers
 
