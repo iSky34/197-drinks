@@ -1,7 +1,7 @@
 # KWS-Transformer
 
 Use transformers for keyword spotting
-# 197-drinks
+
 Name:Eisler Spencer T. Go
 
 I. Paper
