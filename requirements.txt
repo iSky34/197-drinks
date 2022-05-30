@@ -1,5 +1,5 @@
-pytorch-lightning --upgrade
-torchmetrics --upgrade
+pytorch-lightning
+torchmetrics 
 wandb
 einops
 pysimplegui
