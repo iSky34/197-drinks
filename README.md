@@ -10,7 +10,7 @@ model: transformers
 
 
 
-II. Install and use requirements
+# II. Install and use requirements
 
 pip3 install -r requirements.txt
 
@@ -33,7 +33,7 @@ For interface:
 
 
 
-III. Sample Results +inference interface
+# III. Sample Results +inference interface
 
 ![image](https://user-images.githubusercontent.com/103951064/171042109-0e30ab8d-24c4-40c1-94fa-d4a063e197a9.png)
 
@@ -49,27 +49,27 @@ III. Sample Results +inference interface
 
 
 
-IV. Parameter Info
+# IV. Parameter Info
 
 ![image](https://user-images.githubusercontent.com/103951064/171051275-597f6faf-f2b8-4497-8db6-c1d7bb1ce82c.png)
 
 
 
-V. Training Info
+# V. Training Info
 ![image](https://user-images.githubusercontent.com/103951064/171051250-a4ca589b-5674-4931-b92c-661b8f1e6681.png)
 
 
-VI. Testing Info
+# VI. Testing Info
 
 ![image](https://user-images.githubusercontent.com/103951064/171051431-1dcd426a-4c81-45eb-a46f-f172b770dc18.png)
 
 
 
 
-VII.Dataset
+# VII.Dataset
 Downloaded in the code
 
-VIII.
+# VIII.
 Colab examples:
 
 https://colab.research.google.com/drive/1l8zNWkEJkDdr_yzQDJIk6Hw56xKXRy_y?usp=sharing
