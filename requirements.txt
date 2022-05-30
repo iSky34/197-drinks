@@ -1,0 +1,8 @@
+pytorch-lightning --upgrade
+torchmetrics --upgrade
+wandb
+einops
+pysimplegui
+sounddevice 
+librosa
+validators
