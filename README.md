@@ -30,11 +30,13 @@ For interface:
 
 III. Sample Results +inference interface
 
-![image](https://user-images.githubusercontent.com/103951064/171041425-7cab5496-1596-4ee1-8725-674dd45befb1.png)
-
-![image](https://user-images.githubusercontent.com/103951064/171041455-bb343b08-8601-4cab-8a28-8325686a8033.png)
 
 ![image](https://user-images.githubusercontent.com/103951064/171041484-cfd0f1e1-1310-418c-98b4-66fea3243dba.png)
+
+![image](https://user-images.githubusercontent.com/103951064/171041936-4a3ed3d3-6377-46e7-b7e5-d8e84ed5d9da.png)
+
+![image](https://user-images.githubusercontent.com/103951064/171041972-c00e5d2c-bfc3-4676-b9ec-495b113894c7.png)
+
 
 
 
