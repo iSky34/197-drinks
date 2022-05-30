@@ -19,11 +19,24 @@ preferrably ran on colab
 
 !pip install -r /content/197-drinks/requirements.txt
 
+For training:
+
 !python3 /content/197-drinks/train.py
 
-!python3 /content/197-drinks/test.py
+For interface:
 
-III. Sample Results
+!python3 /content/197-drinks/kws-infer.py
+
+
+III. Sample Results +inference interface
+
+![image](https://user-images.githubusercontent.com/103951064/171041425-7cab5496-1596-4ee1-8725-674dd45befb1.png)
+
+![image](https://user-images.githubusercontent.com/103951064/171041455-bb343b08-8601-4cab-8a28-8325686a8033.png)
+
+![image](https://user-images.githubusercontent.com/103951064/171041484-cfd0f1e1-1310-418c-98b4-66fea3243dba.png)
+
+
 
 IV. Parameter Info
 
@@ -37,5 +50,7 @@ Downloaded in the code
 
 VIII.
 Colab examples:
+
+https://colab.research.google.com/drive/1l8zNWkEJkDdr_yzQDJIk6Hw56xKXRy_y?usp=sharing
 
 
