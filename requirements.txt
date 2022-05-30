@@ -1,7 +1,0 @@
-pytorch-lightning
-torchmetrics
-
-argparse
-torchvision
-albumentations==0.4.6
-pycocotools
