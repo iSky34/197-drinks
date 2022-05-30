@@ -5,7 +5,10 @@ Use transformers for keyword spotting
 Name:Eisler Spencer T. Go
 
 I. Paper
+
 model: transformers
+
+
 
 II. Install and use requirements
 
@@ -28,6 +31,8 @@ For interface:
 !python3 /content/197-drinks/kws-infer.py
 
 
+
+
 III. Sample Results +inference interface
 
 ![image](https://user-images.githubusercontent.com/103951064/171042109-0e30ab8d-24c4-40c1-94fa-d4a063e197a9.png)
@@ -46,12 +51,22 @@ III. Sample Results +inference interface
 
 IV. Parameter Info
 
-![image](https://user-images.githubusercontent.com/103951064/171039010-ab072214-fb80-41f3-a82e-e8d5be919879.png)
+![image](https://user-images.githubusercontent.com/103951064/171051275-597f6faf-f2b8-4497-8db6-c1d7bb1ce82c.png)
+
+
 
 V. Training Info
-![image](https://user-images.githubusercontent.com/103951064/171039090-7fc194cd-268d-44a4-a08d-a42bee88774b.png)
+![image](https://user-images.githubusercontent.com/103951064/171051250-a4ca589b-5674-4931-b92c-661b8f1e6681.png)
 
-IV.Dataset
+
+VI. Testing Info
+
+![image](https://user-images.githubusercontent.com/103951064/171051431-1dcd426a-4c81-45eb-a46f-f172b770dc18.png)
+
+
+
+
+VII.Dataset
 Downloaded in the code
 
 VIII.
